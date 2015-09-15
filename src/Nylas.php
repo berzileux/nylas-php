@@ -3,8 +3,16 @@
 namespace Nylas;
 
 
-use Nylas\Models;
 use GuzzleHttp\Client as GuzzleClient;
+use Nylas\Models;
+use Nylas\Models\Calendar;
+use Nylas\Models\Contact;
+use Nylas\Models\Draft;
+use Nylas\Models\Event;
+use Nylas\Models\File;
+use Nylas\Models\Message;
+use Nylas\Models\Tag;
+use Nylas\Models\Thread;
 
 
 class Nylas {
@@ -68,9 +76,49 @@ class Nylas {
         return $this->apiToken;
     }
 
-    public function namespaces() {
-        $nsObj = new Models\Namespaces($this, NULL);
-        return new NylasModelCollection($nsObj, $this, NULL);
+    public function account() {
+        $account = new Models\Account($this, null);
+        return $this->getResource(null, $account, null, array());
+    }
+
+    public function messages() {
+        $msgObj = new Message($this, null);
+        return new NylasModelCollection($msgObj, $this, null, array(), 0, array());
+    }
+
+    public function threads() {
+        $msgObj = new Thread($this, null);
+        return new NylasModelCollection($msgObj, $this, null, array(), 0, array());
+    }
+
+    public function drafts() {
+        $msgObj = new Draft($this, null);
+        return new NylasModelCollection($msgObj, $this, null, array(), 0, array());
+    }
+
+    public function tags() {
+        $msgObj = new Tag($this, null);
+        return new NylasModelCollection($msgObj, $this, null, array(), 0, array());
+    }
+
+    public function files() {
+        $msgObj = new File($this, null);
+        return new NylasModelCollection($msgObj, $this, null, array(), 0, array());
+    }
+
+    public function contacts() {
+        $msgObj = new Contact($this, null);
+        return new NylasModelCollection($msgObj, $this, null, array(), 0, array());
+    }
+
+    public function calendars() {
+        $msgObj = new Calendar($this, null);
+        return new NylasModelCollection($msgObj, $this, null, array(), 0, array());
+    }
+
+    public function events() {
+        $msgObj = new Event($this, null);
+        return new NylasModelCollection($msgObj, $this, null, array(), 0, array());
     }
 
     // filter should be filters

@@ -5,7 +5,19 @@ namespace Nylas;
 class NylasModelCollection {
 
     private $chunkSize = 50;
+    /** @var NylasAPIObject */
+    private $klass;
+    /** @var Nylas */
+    private $api;
 
+    /**
+     * @param NylasAPIObject $klass
+     * @param Nylas $api
+     * @param \Nylas\Models\Account|null $namespace
+     * @param array $filter
+     * @param int $offset
+     * @param array $filters
+     */
     public function __construct($klass, $api, $namespace=NULL, $filter=array(), $offset=0, $filters=array()) {
         $this->klass = $klass;
         $this->api = $api;

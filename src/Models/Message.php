@@ -9,6 +9,11 @@ class Message extends NylasAPIObject {
 
     public $collectionName = 'messages';
 
+    /** @var \Nylas\Nylas */
+    private $api;
+    /** @var \Nylas\Models\Account|null */
+    private $namespace;
+
     public function __construct($api, $namespace) {
         parent::__construct();
         $this->api = $api;
