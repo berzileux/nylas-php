@@ -49,38 +49,24 @@ $get_token = $client->getAuthToken($access_code);
 $_SESSION['access_token'] = $get_token;
 ```
 
-
-## Fetching Namespaces
-
-```php
-$client = new Nylas(CLIENT, SECRET, TOKEN);
-$namespace = $client->namespaces()->first();
-
-echo $namespace->email_address;
-echo $namespace->provider;
-```
-
-
-
 ## Fetching Threads
 
 ```php
 $client = new Nylas(CLIENT, SECRET, TOKEN);
-$namespace = $client->namespaces()->first();
 
 // Fetch the first thread
-$first_thread = $namespace->threads()->first();
+$first_thread = $client->threads()->first();
 echo $first_thread->id;
 
 // Fetch first 2 latest threads
-$two_threads = $namespace->threads()->all(2);
+$two_threads = $client->threads()->all(2);
 foreach($two_threads as $thread) {
     echo $thread->id;
 }
 
 // List all threads with 'ben@nylas.com'
 $search_criteria = array("any_email" => "ben@nylas.com");
-$get_threads = $namespace->threads()->where($search_criteria)->items()
+$get_threads = $client->threads()->where($search_criteria)->items()
 foreach($get_threads as $thread) {
     echo $thread->id;
 }
@@ -90,7 +76,7 @@ foreach($get_threads as $thread) {
 
 ```php
 // List thread participants
-foreach($thead->participants as $participant) {
+foreach($thread->participants as $participant) {
     echo $participant->email;
     echo $participant->name;
 }
@@ -134,10 +120,9 @@ foreach($thread->messages()->items() as $message) {
 
 ```php
 $client = new Nylas(CLIENT, SECRET, TOKEN);
-$namespace = $client->namespaces()->first();
 
 $file_path = '/var/my/folder/test_file.pdf';
-$upload_resp = $namespace->files()->create($file_path);
+$upload_resp = $client->files()->create($file_path);
 echo $upload_resp->id;
 ```
 
@@ -145,14 +130,13 @@ echo $upload_resp->id;
 
 ```php
 $client = new Nylas(CLIENT, SECRET, TOKEN);
-$namespace = $client->namespaces()->first();
 
 $person_obj = new \Nylas\Models\Person('Kartik Talwar', 'kartik@nylas.com');
 $message_obj = array( "to" => array($person_obj),
                       "subject" => "Hello, PHP!",
                       "body" => "Test <br> message");
 
-$draft = $namespace->drafts()->create($message_obj);
+$draft = $client->drafts()->create($message_obj);
 $send_message = $draft->send();
 echo $send_message->id;
 ```
@@ -161,8 +145,7 @@ echo $send_message->id;
 
 ```php
 $client = new Nylas(CLIENT, SECRET, TOKEN);
-$namespace = $client->namespaces()->first();
-$calendars = $namespace->calendars()->all();
+$calendars = $client->calendars()->all();
 
 $calendar = null;
 foeach($calendars as $i) {
@@ -179,7 +162,7 @@ $calendar_obj = array("title" => "Important Meeting",
                       "when" => array("start_time" => time(),
                                       "end_time" => time() + (30*60)));
 // create event
-$event = $namespace->events()->create($calendar_obj);
+$event = $client->events()->create($calendar_obj);
 echo $event->id;
 
 // update
@@ -188,7 +171,7 @@ $event = $event->update(array("location" => "Meeting room #1"));
 // delete event
 $event->delete();
 // delete event (alternate)
-$remove = $namespace->events()->find($event->id)->delete();
+$remove = $client->events()->find($event->id)->delete();
 ```
 
 
