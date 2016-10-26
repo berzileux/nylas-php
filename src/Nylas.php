@@ -241,7 +241,7 @@ class Nylas
         $payload = $this->createHeaders();
         if ($klass->collectionName == 'files') {
             $payload['headers']['Content-Type'] = 'multipart/form-data';
-            $payload['body'] = $data;
+            $payload['multipart'] = $data;
         } else {
             $payload['headers']['Content-Type'] = 'application/json';
             $payload['json'] = $data;
@@ -267,7 +267,7 @@ class Nylas
 
         if ($klass->collectionName == 'files') {
             $payload['headers']['Content-Type'] = 'multipart/form-data';
-            $payload['body'] = $data;
+            $payload['multipart'] = $data;
         } else {
             $payload = $this->createHeaders();
             $payload['json'] = $data;
