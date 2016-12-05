@@ -50,7 +50,7 @@ class Nylas
         return new GuzzleClient(['base_uri' => $this->apiServer]);
     }
 
-    public function createAuthURL($redirect_uri, $login_hint = null)
+    public function createAuthURL($redirect_uri, $login_hint = null, $state = null)
     {
         $args = [
             "client_id"     => $this->appID,
@@ -58,7 +58,7 @@ class Nylas
             "response_type" => "code",
             "scope"         => "email",
             "login_hint"    => $login_hint,
-            "state"         => $this->generateId(),
+            "state"         => $state //$this->generateId(),
         ];
 
         return $this->apiServer . '/oauth/authorize?' . http_build_query($args);
