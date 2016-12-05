@@ -82,11 +82,13 @@ class Nylas
         $responseJson = $this->apiClient->post($url, $payload)->getBody()->getContents();
         $response = json_decode($responseJson, true);
 
-        if (array_key_exists('access_token', $response)) {
-            $this->apiToken = $response['access_token'];
-        }
+        return $response;
 
-        return $this->apiToken;
+//        if (array_key_exists('access_token', $response)) {
+//            $this->apiToken = $response['access_token'];
+//        }
+//
+//        return $this->apiToken;
     }
 
     public function account()
